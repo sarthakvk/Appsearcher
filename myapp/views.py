@@ -10,7 +10,8 @@ def index(request):
 
         form = Appform(request.POST)
 
-
+# TODO handel errors if details are incorrect!
+# TODO add AJAX
         if form.is_valid():
 
             if form.data['play_app'] != "":
@@ -19,6 +20,10 @@ def index(request):
 
                 data_dict = playStore(url)
 
+                if data_dict.setdefault('ERROR','NO_ERROR') != 'NO_ERROR':
+
+                    pass
+
 
             elif form.data['ios_app'] != "" and form.data['ios_app_no'] !="":
 
@@ -26,6 +31,10 @@ def index(request):
                 url = "https://apps.apple.com/in/app/"+ form.data['ios_app'] + "/id"+str(form.data['ios_app_no'])
 
                 data_dict = appStore(url)
+
+                if data_dict.setdefault('ERROR','NO_ERROR') != 'NO_ERROR':
+
+                    pass
 
             form = Appform
 

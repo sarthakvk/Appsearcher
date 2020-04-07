@@ -4,9 +4,12 @@ import re
 
 
 def playStore(url):
+
     data = req.get(url).content
 
     data = bs(data, features="html.parser")
+    if data.title.text == "Not Found":
+        return {'ERROR':"Play_Store"}
 
     strdata = bs.prettify(data)  # making data to str type
 
@@ -49,6 +52,9 @@ def appStore(url):
     data = req.get(url).content
 
     data = bs(data, features="html.parser")
+
+    if data.text == "":
+        return {"ERROR": "App_Store"}
 
     icon = data.find("picture").find('source')['srcset'].split(',')[0][:-3]
 
