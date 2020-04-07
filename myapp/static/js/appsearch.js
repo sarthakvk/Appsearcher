@@ -1,199 +1,173 @@
- $(".store").each(function(){
+$(".store").each(function() {
+  $(this).click(function() {
+    if ($(this).attr("id") == "play") {
 
-        $(this).click(function(){
+      $(".app-store").css("display", "none").delay(1000);
 
-            if ($(this).attr("id") == "play"){
+      $(".play-store").css("display", "inline").delay(1000)
 
-                $(".app-store").css("display","none").delay(1000);
+    }
 
-                $(".play-store").css("display","inline").delay(1000)
+    else {
 
-                }
+      $(".play-store").css("display", "none").delay(1000);
 
-            else {
+      $(".app-store").css("display", "inline").delay(1000)
+    }
+  })
+});
 
-                $(".play-store").css("display","none").delay(1000);
+///////////////////////// AJAX ///////////////////////////////////
 
-                $(".app-store").css("display","inline").delay(1000)
-
-                }
-
-            })
-
-        });
-
- 
- ///////////////////////// AJAX ///////////////////////////////////
- 
 $('#run-ajax').click(function() {
+  $(this).attr('disabled', 'disabled');
+  $(this).css('cursor', 'not-allowed');
+  $('#loading').css('display', 'inline');
 
-    $(this).attr('disabled','disabled');
-    $(this).css('cursor','not-allowed');
-    $('#loading').css('display','inline');
+  // $('.store').
+  var opt = $('input[name=store]:checked', 'form').val();
 
+  if (opt == "1") {
 
-    // $('.store').
-    var opt = $('input[name=store]:checked', 'form').val();
+    var a = $.ajax({
 
-    if (opt=="1"){
+      url : "ajax/",
 
+      type : "POST",
 
-        var a =    $.ajax({
+      data : {
 
-         url: "ajax/",
+        store : "1",
 
-         type: "POST",
+        play_app : $('input[name=play_app]', 'form').val(),
 
-         data: {
+        csrfmiddlewaretoken : window.CSRF_TOKEN,
+      },
 
-             store:"1",
+      dataType : 'json'
 
-             play_app: $('input[name=play_app]', 'form').val(),
+    });
 
-             csrfmiddlewaretoken: window.CSRF_TOKEN,
-         },
+    a.done(function(json) {
+      $('input[name=play_app]', 'form').val("");
 
-         dataType: 'json'
+      $('#loading').css('display', 'none');
 
-     });
+      $('#run-ajax').removeAttr('disabled');
 
-     a.done(function (json) {
+      $('#run-ajax').css('cursor', 'default');
 
-         $('input[name=play_app]', 'form').val("");
+      $('#data').css('display', 'block');
 
-         $('#loading').css('display','none');
+      $('#appName').text(json.APP_NAME);
 
-         $('#run-ajax').removeAttr('disabled');
+      $('#dev-name').text(json.DEV_NAME);
 
-         $('#run-ajax').css('cursor','default');
+      $('#icon').attr('src', json.ICON);
 
-         $('#data').css('display', 'block');
+      $('#rating').text(json.RATING + ' Rating');
 
-         $('#appName').text(json.APP_NAME);
+      $('#reviews').text(json.REVIEWS + " Reviews");
 
-         $('#dev-name').text(json.DEV_NAME);
+      $('#downloads').text(json.DOWNLOADS + " Downloads");
 
-         $('#icon').attr('src', json.ICON);
+      $('#discription').text(json.DISCRIPTION)
+    });
 
-         $('#rating').text(json.RATING + ' Rating');
+    a.fail(function(json) {
+      $('#loading').css('display', 'none');
 
-         $('#reviews').text(json.REVIEWS + " Reviews");
+      $('#run-ajax').removeAttr('disabled');
 
-         $('#downloads').text(json.DOWNLOADS + " Downloads");
+      $('#run-ajax').css('cursor', 'default');
 
-         $('#discription').text(json.DISCRIPTION)
+      $('.error-msg').css('display', 'block');
 
+      package = $('input[name=play_app]', 'form').val();
 
-     });
+      $('input[name=play_app]', 'form').val("");
 
-        a.fail(function (json) {
+      $('.error-head')
+          .html(package + " package not found in <strong>Play Store</strong>");
 
-            $('#loading').css('display','none');
+      $('.error-para')
+          .html(
+              "<ul><li>Goto desired application in play store then package name is in the url followed by <code>id=</code></li></ul>")
+    })
 
-            $('#run-ajax').removeAttr('disabled');
+  }
 
-            $('#run-ajax').css('cursor','default');
+  else {
 
-            $('.error-msg').css('display','block');
+    var a = $.ajax({
 
-            package = $('input[name=play_app]', 'form').val();
+      url : "ajax/",
 
-            $('input[name=play_app]', 'form').val("");
+      type : "POST",
 
-            $('.error-head').html(package+" package not found in <strong>Play Store</strong>");
+      data : {
 
-            $('.error-para').html("<ul><li>Goto desired application in play store then package name is in the url followed by <code>id=</code></li></ul>")
+        store : "2",
 
+        ios_app : $('input[name=ios_app]', 'form').val(),
 
-        })
+        ios_app_no : $('input[name=ios_app_no]', 'form').val(),
 
-    }
+        csrfmiddlewaretoken : window.CSRF_TOKEN,
+      },
 
+      dataType : 'json'
 
+    });
 
-    else{
+    a.done(function(json) {
+      $('#loading').css('display', 'none');
 
+      $('#run-ajax').removeAttr('disabled');
 
-        var a =    $.ajax({
+      $('#run-ajax').css('cursor', 'default');
 
-         url: "ajax/",
+      $('#data').css('display', 'block');
 
-         type: "POST",
+      $('#appName').text(json.APP_NAME);
 
+      $('#dev-name').text(json.DEV_NAME);
 
+      $('#icon').attr('src', json.ICON);
 
-         data: {
+      $('#rating').text(json.RATING + ' Rating');
 
-             store:"2",
+      $('#reviews').text(json.REVIEWS + " Reviews");
 
-             ios_app:$('input[name=ios_app]', 'form').val(),
+      $('#downloads').text(json.DOWNLOADS + " Downloads");
 
-             ios_app_no: $('input[name=ios_app_no]', 'form').val(),
+      $('#discription').text(json.DISCRIPTION)
+    });
 
-             csrfmiddlewaretoken: window.CSRF_TOKEN,
-         },
+    a.fail(function(json) {
+      $('#loading').css('display', 'none');
 
-         dataType: 'json'
+      $('#run-ajax').removeAttr('disabled');
 
-     });
+      $('#run-ajax').css('cursor', 'default');
 
-     a.done(function (json) {
+      $('.error-msg').css('display', 'block');
 
-         $('#loading').css('display','none');
+      appName = $('input[name=ios_app]', 'form').val();
+      $('input[name=ios_app]', 'form').val("");
 
-         $('#run-ajax').removeAttr('disabled');
+      appNo = $('input[name=ios_app_no]', 'form').val();
+      $('input[name=ios_app_no]', 'form').val("");
 
-         $('#run-ajax').css('cursor','default');
+      $('input[name=play_app]', 'form').val("");
 
-         $('#data').css('display', 'block');
+      $('.error-head')
+          .html(appName + " app not found in <strong>App Store</strong>");
 
-         $('#appName').text(json.APP_NAME);
-
-         $('#dev-name').text(json.DEV_NAME);
-
-         $('#icon').attr('src', json.ICON);
-
-         $('#rating').text(json.RATING + ' Rating');
-
-         $('#reviews').text(json.REVIEWS + " Reviews");
-
-         $('#downloads').text(json.DOWNLOADS + " Downloads");
-
-         $('#discription').text(json.DISCRIPTION)
-
-
-     });
-
-
-
-        a.fail(function (json) {
-
-            $('#loading').css('display','none');
-
-            $('#run-ajax').removeAttr('disabled');
-
-            $('#run-ajax').css('cursor','default');
-
-            $('.error-msg').css('display','block');
-
-            appName = $('input[name=ios_app]', 'form').val();
-            $('input[name=ios_app]', 'form').val("");
-
-            appNo = $('input[name=ios_app_no]', 'form').val();
-            $('input[name=ios_app_no]', 'form').val("");
-
-            $('input[name=play_app]', 'form').val("");
-
-            $('.error-head').html(appName+" app not found in <strong>App Store</strong>");
-
-            $('.error-para').html('Goto desired application in app store then app name is in the url followed by <code>app/</code>.<br>' +
-                'Application number is the number followed by <code>/id</code>')
-
-
-        })
-
-
-
-    }
-
- });
+      $('.error-para')
+          .html(
+              'Goto desired application in app store then app name is in the url followed by <code>app/</code>.<br>' +
+              'Application number is the number followed by <code>/id</code>')
+    })
+  }
+});
