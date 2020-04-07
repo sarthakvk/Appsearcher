@@ -1,8 +1,11 @@
-from django.shortcuts import render
-from .forms import Appform
-from .logic import playStore, appStore
 import json
+
 from django.http import JsonResponse
+from django.shortcuts import render
+
+from .forms import Appform
+from .logic import appStore
+from .logic import playStore
 
 # Create your views here.
 
