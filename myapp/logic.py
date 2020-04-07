@@ -9,8 +9,7 @@ def playStore(url):
     data = req.get(url).content
 
     data = bs(data, features="html.parser")
-    if data.title.text == "Not Found":
-        return {'ERROR':"Play_Store"}
+
 
     if data.title.text == "Not Found":
         return {"ERROR": True}
