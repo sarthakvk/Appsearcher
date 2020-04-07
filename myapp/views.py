@@ -34,9 +34,8 @@ def ajaxsearch(request):
 
             if data["play_app"] != "":
 
-                url = (
-                    "https://play.google.com/store/apps/details?id=" + data["play_app"]
-                )
+                url = ("https://play.google.com/store/apps/details?id=" +
+                       data["play_app"])
 
                 data_dict = playStore(url)
 
@@ -56,12 +55,8 @@ def ajaxsearch(request):
 
             if data["ios_app"] != "" and data["ios_app_no"] != "":
 
-                url = (
-                    "https://apps.apple.com/in/app/"
-                    + data["ios_app"]
-                    + "/id"
-                    + str(data["ios_app_no"])
-                )
+                url = ("https://apps.apple.com/in/app/" + data["ios_app"] +
+                       "/id" + str(data["ios_app_no"]))
 
                 data_dict = appStore(url)
 
