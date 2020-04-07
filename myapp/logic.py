@@ -8,6 +8,11 @@ def playStore(url):
 
     data = bs(data, features="html.parser")
 
+    if data.title.text =='Not Found':
+        return {'ERROR':True}
+
+
+
     strdata = bs.prettify(data)  # making data to str type
 
     icon = re.findall(r'<.*T75of sHb2Xb.*>', strdata)[0]
@@ -41,7 +46,7 @@ def playStore(url):
     reviews = re.sub(r'\<.*?\>', '', reviews)
 
     return {'ICON': icon, 'APP_NAME': name, 'DEV_NAME': devname, 'DISCRIPTION': discp,
-            'RATING': rating,'DOWNLOADS':downloads, 'REVIEWS':reviews}
+            'RATING': rating,'DOWNLOADS':downloads, 'REVIEWS':reviews,'ERROR':False}
 
 
 
@@ -49,6 +54,11 @@ def appStore(url):
     data = req.get(url).content
 
     data = bs(data, features="html.parser")
+
+    if str(data) == "":
+        return {'ERROR':True}
+
+
 
     icon = data.find("picture").find('source')['srcset'].split(',')[0][:-3]
 
@@ -75,5 +85,5 @@ def appStore(url):
 
 
     return {'ICON': icon, 'APP_NAME': name, 'DEV_NAME': devname, 'DISCRIPTION': discp,
-            'RATING': rating, 'DOWNLOADS': downloads, 'REVIEWS': reviews}
+            'RATING': rating, 'DOWNLOADS': downloads, 'REVIEWS': reviews,'ERROR':False}
 

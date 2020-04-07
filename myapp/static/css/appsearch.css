@@ -1,0 +1,66 @@
+#main-container{
+    height: 350px;
+}
+
+form{
+    height: 100px;
+}
+
+#play{
+    font-size: large;
+}
+
+.play-store{
+    display: inline;
+}
+
+#app{
+    font-size: large;
+}
+
+.app-store{
+    display: none;
+}
+
+#app-name{
+    margin-left: 100px;
+}
+
+#app-id{
+    margin-left: 175.5px;
+
+}
+
+
+#run-ajax{
+    position: static;
+}
+
+
+#loading{
+
+    display:none;
+
+    font-size: medium;
+}
+
+#gif{
+
+    height: 50px;
+
+    width: 50px;
+}
+
+
+
+#data{
+
+    display: none;
+}
+
+#bottom-line{
+
+    border: none;
+
+    height: 5px;
+}
