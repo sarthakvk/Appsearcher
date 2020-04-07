@@ -48,6 +48,9 @@ $("#run-ajax").click(function(){
         });
 
         a.done(function(json){
+
+            $('.error-msg').css('display','none')
+
             $("input[name=play_app]" , "form").val("");
 
             $("#loading").css("display" , "none");
@@ -74,6 +77,9 @@ $("#run-ajax").click(function(){
         });
 
         a.fail(function(json){
+
+            $('#data').css('display','none')
+
             $("#loading").css("display" , "none");
 
             $("#run-ajax").removeAttr("disabled");
