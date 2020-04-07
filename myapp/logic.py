@@ -8,10 +8,8 @@ def playStore(url):
 
     data = bs(data, features="html.parser")
 
-    if data.title.text =='Not Found':
-        return {'ERROR':True}
-
-
+    if data.title.text == 'Not Found':
+        return {'ERROR': True}
 
     strdata = bs.prettify(data)  # making data to str type
 
@@ -31,7 +29,8 @@ def playStore(url):
 
     discp = re.sub(r'\<.*?\>', "", discp)
 
-    if len(discp) > 200: discp = discp[:200] + "..."
+    if len(discp) > 200:
+        discp = discp[:200] + "..."
 
     rating = str(data.find('div', class_="BHMmbe"))
 
@@ -46,8 +45,7 @@ def playStore(url):
     reviews = re.sub(r'\<.*?\>', '', reviews)
 
     return {'ICON': icon, 'APP_NAME': name, 'DEV_NAME': devname, 'DISCRIPTION': discp,
-            'RATING': rating,'DOWNLOADS':downloads, 'REVIEWS':reviews,'ERROR':False}
-
+            'RATING': rating, 'DOWNLOADS': downloads, 'REVIEWS': reviews, 'ERROR': False}
 
 
 def appStore(url):
@@ -56,9 +54,7 @@ def appStore(url):
     data = bs(data, features="html.parser")
 
     if str(data) == "":
-        return {'ERROR':True}
-
-
+        return {'ERROR': True}
 
     icon = data.find("picture").find('source')['srcset'].split(',')[0][:-3]
 
@@ -66,24 +62,24 @@ def appStore(url):
 
     name = name.split("\n")[1].strip()
 
-    devname = str(data.select(".product-header__identity.app-header__identity"))
+    devname = str(data.select(
+        ".product-header__identity.app-header__identity"))
 
     devname = devname.split("\n")[-3].strip()
 
     discp = data.find_all("p")[1].text[:201]+"..."
 
-    if len(discp) > 200: discp = discp[:200] + "..."
+    if len(discp) > 200:
+        discp = discp[:200] + "..."
 
-    rating = str(data.find('figcaption', class_="we-rating-count star-rating__count"))
+    rating = str(
+        data.find('figcaption', class_="we-rating-count star-rating__count"))
 
-    rating,reviews = re.sub(r'\<.*?\>',"",rating).split(", ")
+    rating, reviews = re.sub(r'\<.*?\>', "", rating).split(", ")
 
     reviews = reviews.split()[0]
 
     downloads = "Not Available"
 
-
-
     return {'ICON': icon, 'APP_NAME': name, 'DEV_NAME': devname, 'DISCRIPTION': discp,
-            'RATING': rating, 'DOWNLOADS': downloads, 'REVIEWS': reviews,'ERROR':False}
-
+            'RATING': rating, 'DOWNLOADS': downloads, 'REVIEWS': reviews, 'ERROR': False}

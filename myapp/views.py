@@ -5,17 +5,17 @@ import json
 from django.http import JsonResponse
 # Create your views here.
 
+
 def home(request):
 
-    return render(request,template_name='home.html')
-
+    return render(request, template_name='home.html')
 
 
 def appsearch(request):
 
     form = Appform()
 
-    return render(request,'appsearch.html',{'form':form})
+    return render(request, 'appsearch.html', {'form': form})
 
 
 def ajaxsearch(request):
@@ -30,7 +30,8 @@ def ajaxsearch(request):
 
             if data['play_app'] != "":
 
-                url = "https://play.google.com/store/apps/details?id=" + data['play_app']
+                url = "https://play.google.com/store/apps/details?id=" + \
+                    data['play_app']
 
                 data_dict = playStore(url)
 
@@ -40,11 +41,7 @@ def ajaxsearch(request):
 
             else:
 
-                return JsonResponse({'success':False},status=400)
-
-
-
-
+                return JsonResponse({'success': False}, status=400)
 
         else:
 
@@ -54,7 +51,8 @@ def ajaxsearch(request):
 
             if data['ios_app'] != "" and data['ios_app_no'] != "":
 
-                url = "https://apps.apple.com/in/app/" + data['ios_app'] + "/id" + str(data['ios_app_no'])
+                url = "https://apps.apple.com/in/app/" + \
+                    data['ios_app'] + "/id" + str(data['ios_app_no'])
 
                 data_dict = appStore(url)
 
@@ -70,10 +68,6 @@ def ajaxsearch(request):
 
             data_dict = json.dumps(data_dict)
 
+        return JsonResponse(data_dict, status=200)
 
-        return JsonResponse(data_dict,status=200)
-
-
-
-
-    return JsonResponse({'success':False},status=400)
+    return JsonResponse({'success': False}, status=400)
