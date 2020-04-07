@@ -35,14 +35,16 @@
 
                 <hr class="my-4">
 
-                <form method="GET">
+                <form method="POST">
+
+                    {% csrf_token %}
 
                             <input type="radio" id="play" class="store" name = "store" > <label id="play" style="font-size: large">Play Store</label>
 
 
                                  <div class = "play-store" style="display: none;">
 
-                                    <label id="package" style="margin-left: 100px;">Package name: </label> <input type="text" id="package" name="play-name">
+                                    <label id="package" style="margin-left: 100px;">Package name: </label> {{ form.play_app }}
 
                                      <input type="submit">
 
@@ -55,11 +57,11 @@
 
                                 <div class="app-store" style="display: none;">
 
-                                    <label id="app-name" style="margin-left: 100px;">App Name:</label> <input type="text" id="app-name" name="app-name">
+                                    <label id="app-name" style="margin-left: 100px;">App Name:</label> {{ form.ios_app }}
 
                                     <br>
 
-                                    <label id="app-id" style="margin-left: 175.5px;">Application ID:</label> <input type="text" id="app-id" name="app-id">
+                                    <label id="app-id" style="margin-left: 175.5px;">Application ID:</label> {{ form.ios_app_no }}
 
                                     <br><br>
 
@@ -76,6 +78,65 @@
             </div>
     </div>
 
+    <hr class="my-4">
+
+    <div class="container">
+
+        {% if data %}
+        <div class="row">
+
+            <div class="col-sm-4">
+
+                <img src= {{ data.ICON }} >
+
+            </div>
+
+            <div class="col-sm-4">
+
+                <h2 class="display-4">{{ data.APP_NAME }}</h2>
+
+                <br>
+
+                <h3 class="display-5">{{  data.DEV_NAME }}</h3>
+
+                <br>
+
+                <ul>
+
+                    <li><p class="lead">{{ data.RATING }} Rating</p></li>
+
+                    <li><p class="lead">{{ data.REVIEWS }} Reviews</p></li>
+
+                    <li><p class="lead">{{ data.DOWNLOADS }} Downloads</p></li>
+
+
+                </ul>
+
+
+
+            </div>
+
+        </div>
+        <br><br>
+        <div class="container">
+
+            <button class="btn btn-primary">Discription</button>
+
+            <hr class="my-4">
+
+
+            <p class="lead">{{ data.DISCRIPTION }}</p>
+
+        </div>
+
+
+
+
+        {% endif %}
+
+        <hr style="border: none;height: 5px;">
+
+    </div>
 
 
 
