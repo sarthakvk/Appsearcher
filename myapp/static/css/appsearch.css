@@ -2,7 +2,7 @@
     height: 350px;
 }
 
-form{
+#f-form{
     height: 100px;
 }
 
@@ -20,6 +20,7 @@ form{
 
 .app-store{
     display: none;
+    position: absolute;
 }
 
 #app-name{
@@ -33,7 +34,7 @@ form{
 
 
 #run-ajax{
-    position: static;
+    position: absolute;
 }
 
 
