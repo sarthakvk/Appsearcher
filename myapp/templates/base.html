@@ -5,45 +5,117 @@
     <meta charset="UTF-8">
     <!-- Bootstrap 4.4    -->
         <!--    CSS-->
+
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
         <!--        -->
 
+
         <!--JS JQuery andPopper.js        -->
+
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.js"integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="crossorigin="anonymous"></script>
+
     <!--        -->
+
      <script type="text/javascript"> window.CSRF_TOKEN = '{{ csrf_token }}'; </script>
+
     <!--    -->
+
+
     <!-- CSS   -->
+
     <link rel="stylesheet" href= {% static "css/appsearch.css" %}>
+
     <title>App Searcher</title>
+
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href={% url 'home' %}>App Searcher</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" href={% url 'home' %}>Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href={% url 'app_search' %}>Search Applications</a>
-      <a class="nav-item nav-link" href="#">Keyword Finder</a>
+<div id  = "page-container">
+
+
+
+    <div class="content-wrap">
+
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+          <a class="navbar-brand" href={% url 'home' %}>App Searcher</a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+            <div class="navbar-nav">
+
+              <a class="nav-item nav-link active" href={% url 'home' %}>Home <span class="sr-only">(current)</span></a>
+
+              <a class="nav-item nav-link" href={% url 'app_search' %}>Search Applications</a>
+
+              <a class="nav-item nav-link" href="#">Keyword Finder</a>
+
+            </div>
+
+          </div>
+
+        </nav>
+
+        {% block body %}
+
+        {% endblock %}
+
+
+        </div>
+            <footer class="footer bg-light">
+
+                <div class="container text-center">
+
+                            <ul class="list-inline mb-2">
+
+                                <li class="list-inline-item"><a href="#">About</a></li>
+
+                                <li class="list-inline-item"><span>⋅</span></li>
+
+                                <li class="list-inline-item"><a href="#">Contact</a></li>
+
+                                <li class="list-inline-item"><span>⋅</span></li>
+
+                                <li class="list-inline-item"><a href="#">Terms of  Use</a></li>
+
+                                <li class="list-inline-item"><span>⋅</span></li>
+
+                                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+
+                            </ul>
+
+                            <p class="text-muted small mb-4 mb-lg-0">© Sarthak Vineet Kumar 2020. All Rights Reserved.</p>
+
+                                <ul class="list-inline mb-0">
+
+                                    <li class="list-inline-item"><a href="#"><i class="fa fa-facebook fa-2x fa-fw"></i></a></li>
+
+                                    <li class="list-inline-item"><a href="#"><i class="fa fa-twitter fa-2x fa-fw"></i></a></li>
+
+                                    <li class="list-inline-item"><a href="#"><i class="fa fa-instagram fa-2x fa-fw"></i></a></li>
+
+                                </ul>
+                </div>
+
+            </footer>
+
     </div>
-  </div>
-</nav>
 
-{% block body %}
-
-{% endblock %}
-
-
-<footer style="text-align: center; background-color: #380e18;color: white">Copyright Sarthak Vineet Kumar</footer>
 </body>
+
 </html>
