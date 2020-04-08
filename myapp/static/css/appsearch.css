@@ -40,7 +40,9 @@
 
 #loading{
 
-    display:none;
+    display:inline-block;
+    
+    padding-left: 100px;
 
     font-size: medium;
 }
