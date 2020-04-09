@@ -2,25 +2,41 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from .forms import Appform
-from .logic import appStore
-from .logic import playStore
+from .forms import Appform, Keyform
+from .search import appStore
+from .search import playStore
+from .keywordFinder import key_man
 
 
 # Create your views here.
 
 
 def home ( request ) :
+    """
+    Home View
+
+    """
     return render ( request , template_name = "home.html" )
 
 
 def appsearch ( request ) :
+    """
+    App search View
+
+    """
     form = Appform ( )
 
     return render ( request , "appsearch.html" , { "form" : form } )
 
 
 def ajaxsearch ( request ) :
+
+    """
+    Function for ajax request to
+    App searching and response
+
+    """
+
     data = { }
 
     if request.method == "POST" and request.is_ajax ( ) :
@@ -66,3 +82,61 @@ def ajaxsearch ( request ) :
         return JsonResponse ( data_dict , status = 200 )
 
     return JsonResponse ( { "success" : False } , status = 400 )
+
+
+
+
+
+def key_view(request):
+
+    """
+    View for Keyword finder page
+
+    """
+    form = Keyform()
+
+    return render(request,'keyword.html',{'form':form})
+
+
+
+def key_view_ajax(request):
+
+    """
+    response to AJAX request for
+    keyword finder
+
+    """
+
+    if request.method == "POST" and request.is_ajax ( ) :
+
+        url = request.POST.get('url')
+
+        obj = key_man(url)
+
+        keywords = obj.keyword_finder()
+
+        if len(keywords) == 0:
+
+            return JsonResponse({'keywords':'No Keywords Found'}, status = 200)
+
+        obj.key_saver(keywords)
+
+        related_url = obj.related_urls(keywords)
+
+        keywords_of_related_url = obj.key_of_related_urls(related_url)
+
+        recommended_keywords = obj.recommender(related_url)
+
+        print(keywords)
+        print()
+        print(recommended_keywords)
+        print(related_url)
+        print(keywords_of_related_url)
+
+        return JsonResponse({'keywords':keywords,'recommended':recommended_keywords,'related':keywords_of_related_url},
+                            status = 200)
+
+    else:
+
+        return JsonResponse({'success':False},status = 400)
+

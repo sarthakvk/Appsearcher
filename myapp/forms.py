@@ -8,3 +8,8 @@ class Appform(forms.Form):
     ios_app = forms.CharField(widget= forms.TextInput(attrs={'placeholder':'ex- void-troopers-sci-fi-tapper'}),required=False)
 
     ios_app_no = forms.IntegerField(widget= forms.TextInput(attrs={'placeholder':'ex- 1367822033'}),required=False)
+
+
+class Keyform(forms.Form):
+
+    url = forms.URLField(widget = forms.TextInput(attrs = {'placeholder':'Enter url'}))
