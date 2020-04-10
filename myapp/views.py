@@ -1,10 +1,11 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from .forms import Appform, Keyform
+from .forms import Appform
+from .forms import Keyform
+from .keywordFinder import key_man
 from .search import appStore
 from .search import playStore
-from .keywordFinder import key_man
 
 
 # Create your views here.

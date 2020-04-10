@@ -1,7 +1,8 @@
 import requests as req
 from bs4 import BeautifulSoup as bs
 
-from .models import Url, Keyword
+from .models import Keyword
+from .models import Url
 
 
 class key_man(object):
