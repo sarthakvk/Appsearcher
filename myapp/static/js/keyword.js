@@ -1,58 +1,44 @@
-$("button").click(function(){
-    $(this).attr("disabled" , "disabled");
-    $(this).css("cursor" , "not-allowed");
+$("button").click(function() {
+  $(this).attr("disabled", "disabled");
+  $(this).css("cursor", "not-allowed");
 
-    var a = $.ajax({
-            url : "keyfinder_ajax/" ,
+  var a = $.ajax({
+    url : "keyfinder_ajax/",
 
-            type : "POST" ,
+    type : "POST",
 
-            data : {
+    data : {
 
+      url : $("input[name=url]", "form").val(),
 
-                url : $("input[name=url]" , "form").val() ,
+      csrfmiddlewaretoken : window.CSRF_TOKEN
+    },
 
-                csrfmiddlewaretoken : window.CSRF_TOKEN
-            } ,
+    dataType : "json"
+  });
+  a.done(function(json) {
+    $('button').removeAttr("disabled");
+    $('button').removeAttr("cursor");
 
-            dataType : "json"
-        });
-    a.done(function(json){
+    if (json.keywords) {
 
-        $('button').removeAttr("disabled");
-        $('button').removeAttr("cursor");
+      $('h5').css('display', 'block')
 
-        if (json.keywords){
+      if (json.related) {
+        for (var i of json.related.keys()) {
+          $('related-url').append("<p>" + json.related.i + "</p>")
 
-            $('h5').css('display','block')
+          for (var j in json.related.i) {
 
-            if(json.related){
-                for(var i of json.related.keys())
-                {
-                    $('related-url').append("<p>"+json.related.i+"</p>")
-
-                    for(var j in json.related.i){
-
-                        $('related').append("<li>"+j.name+"</li>")
-
-                    }
-
-
-                }
-            }
-
+            $('related').append("<li>" + j.name + "</li>")
+          }
         }
+      }
+    }
+  })
 
-    })
-
-    a.fail(function(json){
-
-
-        $('button').removeAttr("disabled");
-        $('button').removeAttr("cursor");
-
-    })
-
+  a.fail(function(json) {
+    $('button').removeAttr("disabled");
+    $('button').removeAttr("cursor");
+  })
 })
-
-
