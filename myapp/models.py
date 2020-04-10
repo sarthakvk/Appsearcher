@@ -16,8 +16,8 @@ class Keyword(models.Model):
 
     name = models.CharField(max_length=50)
 
-    url = models.ForeignKey('Url', on_delete=models.CASCADE)
+    url = models.ForeignKey("Url", on_delete=models.CASCADE)
 
     def __str__(self):
 
-        return str(self.name) + " with url "+str(self.url)
+        return str(self.name) + " with url " + str(self.url)

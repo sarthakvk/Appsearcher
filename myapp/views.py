@@ -1,4 +1,3 @@
-
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -46,8 +45,9 @@ def ajaxsearch(request):
 
             if data["play_app"] != "":
 
-                url = ("https://play.google.com/store/apps/details?id=" +
-                       data["play_app"])
+                url = (
+                    "https://play.google.com/store/apps/details?id=" + data["play_app"]
+                )
 
                 data_dict = playStore(url)
 
@@ -66,8 +66,12 @@ def ajaxsearch(request):
 
             if data["ios_app"] != "" and data["ios_app_no"] != "":
 
-                url = ("https://apps.apple.com/in/app/" + data["ios_app"] +
-                       "/id" + str(data["ios_app_no"]))
+                url = (
+                    "https://apps.apple.com/in/app/"
+                    + data["ios_app"]
+                    + "/id"
+                    + str(data["ios_app_no"])
+                )
 
                 data_dict = appStore(url)
 
@@ -90,7 +94,7 @@ def key_view(request):
     """
     form = Keyform()
 
-    return render(request, 'keywords.html', {'form': form})
+    return render(request, "keywords.html", {"form": form})
 
 
 def key_view_ajax(request):
@@ -102,7 +106,7 @@ def key_view_ajax(request):
 
     if request.method == "POST" and request.is_ajax():
 
-        url = request.POST.get('url')
+        url = request.POST.get("url")
 
         obj = key_man(url)
 
@@ -110,7 +114,7 @@ def key_view_ajax(request):
 
         if len(keywords) == 0:
 
-            return JsonResponse({'keywords': 'No Keywords Found'}, status=200)
+            return JsonResponse({"keywords": "No Keywords Found"}, status=200)
 
         obj.key_saver(keywords)
 
@@ -132,9 +136,15 @@ def key_view_ajax(request):
         if len(recommended_keywords) == 0:
             recommended_keywords = False
 
-        return JsonResponse({'keywords': keywords, 'recommended': recommended_keywords, 'related': keywords_of_related_url},
-                            status=200)
+        return JsonResponse(
+            {
+                "keywords": keywords,
+                "recommended": recommended_keywords,
+                "related": keywords_of_related_url,
+            },
+            status=200,
+        )
 
     else:
 
-        return JsonResponse({'success': False}, status=400)
+        return JsonResponse({"success": False}, status=400)

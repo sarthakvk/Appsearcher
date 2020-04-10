@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup as bs
 from .models import Url, Keyword
 
 
-class key_man (object):
+class key_man(object):
     """
     Class for Keyword finding, recommanding and saving to database
     """
@@ -23,17 +23,16 @@ class key_man (object):
 
         head = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/"
-            "537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36"}
+            "537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36"
+        }
 
-        data = bs(req.get(self.url, headers=head).content,
-                  features="html.parser")
+        data = bs(req.get(self.url, headers=head).content, features="html.parser")
 
         keywords = []
 
         try:
 
-            keywords = data.select_one('meta[name="keywords"]')[
-                'content'].split(',')
+            keywords = data.select_one('meta[name="keywords"]')["content"].split(",")
 
         except:
 
@@ -41,8 +40,9 @@ class key_man (object):
 
         try:
 
-            keywords.append(data.select_one(
-                'meta[property="og:description"]')['content'])
+            keywords.append(
+                data.select_one('meta[property="og:description"]')["content"]
+            )
 
         except:
 
@@ -50,8 +50,7 @@ class key_man (object):
 
         try:
 
-            keywords.append(data.select_one(
-                'meta[name="description"]')['content'])
+            keywords.append(data.select_one('meta[name="description"]')["content"])
 
         except:
 
@@ -71,17 +70,18 @@ class key_man (object):
 
         for keyword in keywords:
 
-            key_list = Keyword.objects.filter(
-                name=keyword).exclude(url=self.url).values('url')
+            key_list = (
+                Keyword.objects.filter(name=keyword).exclude(url=self.url).values("url")
+            )
 
             for i in key_list:
 
                 try:
-                    dic[i['url']].append(keyword)
+                    dic[i["url"]].append(keyword)
 
                 except:
 
-                    dic.setdefault(i['url'], [keyword])
+                    dic.setdefault(i["url"], [keyword])
 
         return dic  # dictionary with related urls from keywords of given url
 
@@ -97,9 +97,11 @@ class key_man (object):
         for i in list(dic.keys()):
 
             if len(dic[i]) >= 3:
-                qs = Keyword.objects.filter(url=i).values('name'). \
-                    difference(Keyword.objects.filter(
-                        url=self.url).values('name'))
+                qs = (
+                    Keyword.objects.filter(url=i)
+                    .values("name")
+                    .difference(Keyword.objects.filter(url=self.url).values("name"))
+                )
 
                 recom.extend(list(qs))
 
@@ -116,8 +118,9 @@ class key_man (object):
         related_dic = {}
 
         for i in list(dic.keys()):
-            related_dic[i] = list(Keyword.objects.exclude(
-                name__in=dic[i]).values('name'))
+            related_dic[i] = list(
+                Keyword.objects.exclude(name__in=dic[i]).values("name")
+            )
 
         return related_dic  # dictionary with keyword of related urls in format of dict key:'name'
 
