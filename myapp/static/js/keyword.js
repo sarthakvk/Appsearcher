@@ -3,42 +3,39 @@ $("button").click(function() {
   $(this).css("cursor", "not-allowed");
 
   var a = $.ajax({
-    url : "keyfinder_ajax/",
+    url: "keyfinder_ajax/",
 
-    type : "POST",
+    type: "POST",
 
-    data : {
+    data: {
+      url: $("input[name=url]", "form").val(),
 
-      url : $("input[name=url]", "form").val(),
-
-      csrfmiddlewaretoken : window.CSRF_TOKEN
+      csrfmiddlewaretoken: window.CSRF_TOKEN
     },
 
-    dataType : "json"
+    dataType: "json"
   });
   a.done(function(json) {
-    $('button').removeAttr("disabled");
-    $('button').removeAttr("cursor");
+    $("button").removeAttr("disabled");
+    $("button").removeAttr("cursor");
 
     if (json.keywords) {
-
-      $('h5').css('display', 'block')
+      $("h5").css("display", "block");
 
       if (json.related) {
         for (var i of json.related.keys()) {
-          $('related-url').append("<p>" + json.related.i + "</p>")
+          $("related-url").append("<p>" + json.related.i + "</p>");
 
           for (var j in json.related.i) {
-
-            $('related').append("<li>" + j.name + "</li>")
+            $("related").append("<li>" + j.name + "</li>");
           }
         }
       }
     }
-  })
+  });
 
   a.fail(function(json) {
-    $('button').removeAttr("disabled");
-    $('button').removeAttr("cursor");
-  })
-})
+    $("button").removeAttr("disabled");
+    $("button").removeAttr("cursor");
+  });
+});
