@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+<div class="container">
+
+    <div class="jumbotron">
+
+        <h2 class="display-4">Keyword Recommender</h2>
+
+        <hr>
+
+        <p class="lead">Enter Ketword for finding relative url and recommendation</p>
+
+
+        <form>
+
+            {% csrf_token %}
+
+            <br>
+
+            <label>url</label> {{form.url}}
+
+            <button>Get Keywords</button>
+
+        </form>
+
+    </div>
+
+    <hr>
+    <h5 style="display: none">Related urls:</h5>
+    <div class="related-ulr">
+    <ul class="related">
+
+
+
+    </ul>
+        </div>
+    <br>
+    <h5 style="display: none">Recommended Keywords:</h5>
+    <ul class="recomm">
+
+
+    </ul>
+
+
+</div>
+<script src= {% static 'js/keyword.js' %}></script>
+{% endblock %}

@@ -95,7 +95,7 @@ def key_view(request):
     """
     form = Keyform()
 
-    return render(request,'keyword.html',{'form':form})
+    return render(request,'keywords.html',{'form':form})
 
 
 
@@ -128,10 +128,16 @@ def key_view_ajax(request):
         recommended_keywords = obj.recommender(related_url)
 
         print(keywords)
-        print()
+        print(keywords_of_related_url)
         print(recommended_keywords)
         print(related_url)
-        print(keywords_of_related_url)
+
+        if len(keywords) ==0:
+            keywords = False
+        if len(list(keywords_of_related_url.keys())) == 0:
+            keywords_of_related_url = False
+        if len(recommended_keywords) == 0:
+            recommended_keywords = False
 
         return JsonResponse({'keywords':keywords,'recommended':recommended_keywords,'related':keywords_of_related_url},
                             status = 200)

@@ -115,12 +115,12 @@ class key_man ( object ) :
         :return:
         """
 
-        dic = { }
+        related_dic = { }
 
         for i in list ( dic.keys ( ) ) :
-            dic [ i ] = list ( Keyword.objects.exclude ( name__in = dic [ i ] ).values ( 'name' ) )
+            related_dic [ i ] = list ( Keyword.objects.exclude ( name__in = dic [ i ] ).values ( 'name' ) )
 
-        return dic  # dictionary with keyword of related urls in format of dict key:'name'
+        return related_dic  # dictionary with keyword of related urls in format of dict key:'name'
 
     def key_saver ( self, keywords ) :
 
@@ -129,10 +129,10 @@ class key_man ( object ) :
         :param keywords:
         :return:
         """
-        if len(list(Url.objects.filter(url = url.self))) == 0:
+        if len(list(Url.objects.filter(url = self.url))) != 0:
             return 0
 
         for i in keywords :
-            url = Url(url = self.url)
+            url = Url(self.url)
             url.save()
             Keyword ( name = i , url = url ).save ( )

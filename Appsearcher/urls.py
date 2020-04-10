@@ -20,7 +20,7 @@ from myapp.views import home, key_view, key_view_ajax
 urlpatterns = [
     path('appsearch/', include('myapp.urls')),
     path('keyfinder/',key_view,name= 'keyfinder'),
-    path('keyfinder_ajax/',key_view_ajax,name = "key_ajax"),
+    path('keyfinder/keyfinder_ajax/',key_view_ajax,name = "key_ajax"),
     path('',home,name= "home"),
     path('admin/', admin.site.urls),
 ]
