@@ -27,7 +27,7 @@ SECRET_KEY = ')9*grpk-^2f^$@e3lix!71n-hpz^d^ol4q^pzi2g47@1^6q49g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["fathomless-scrubland-67955.herokuapp.com"]
 
 
 # Application definition
