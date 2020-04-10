@@ -23,17 +23,20 @@ class key_man(object):
         """
 
         head = {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/"
+            "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/"
             "537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36"
         }
 
-        data = bs(req.get(self.url, headers=head).content, features="html.parser")
+        data = bs(req.get(self.url, headers=head).content,
+                  features="html.parser")
 
         keywords = []
 
         try:
 
-            keywords = data.select_one('meta[name="keywords"]')["content"].split(",")
+            keywords = data.select_one(
+                'meta[name="keywords"]')["content"].split(",")
 
         except:
 
@@ -42,8 +45,7 @@ class key_man(object):
         try:
 
             keywords.append(
-                data.select_one('meta[property="og:description"]')["content"]
-            )
+                data.select_one('meta[property="og:description"]')["content"])
 
         except:
 
@@ -51,7 +53,8 @@ class key_man(object):
 
         try:
 
-            keywords.append(data.select_one('meta[name="description"]')["content"])
+            keywords.append(
+                data.select_one('meta[name="description"]')["content"])
 
         except:
 
@@ -71,9 +74,8 @@ class key_man(object):
 
         for keyword in keywords:
 
-            key_list = (
-                Keyword.objects.filter(name=keyword).exclude(url=self.url).values("url")
-            )
+            key_list = (Keyword.objects.filter(name=keyword).exclude(
+                url=self.url).values("url"))
 
             for i in key_list:
 
@@ -98,11 +100,8 @@ class key_man(object):
         for i in list(dic.keys()):
 
             if len(dic[i]) >= 3:
-                qs = (
-                    Keyword.objects.filter(url=i)
-                    .values("name")
-                    .difference(Keyword.objects.filter(url=self.url).values("name"))
-                )
+                qs = (Keyword.objects.filter(url=i).values("name").difference(
+                    Keyword.objects.filter(url=self.url).values("name")))
 
                 recom.extend(list(qs))
 
@@ -120,8 +119,7 @@ class key_man(object):
 
         for i in list(dic.keys()):
             related_dic[i] = list(
-                Keyword.objects.exclude(name__in=dic[i]).values("name")
-            )
+                Keyword.objects.exclude(name__in=dic[i]).values("name"))
 
         return related_dic  # dictionary with keyword of related urls in format of dict key:'name'
 

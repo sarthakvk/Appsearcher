@@ -82,7 +82,8 @@ def appStore(url):
 
     name = name.split("\n")[1].strip()
 
-    devname = str(data.select(".product-header__identity.app-header__identity"))
+    devname = str(
+        data.select(".product-header__identity.app-header__identity"))
 
     devname = devname.split("\n")[-3].strip()
 
@@ -91,7 +92,8 @@ def appStore(url):
     if len(discp) > 200:
         discp = discp[:200] + "..."
 
-    rating = str(data.find("figcaption", class_="we-rating-count star-rating__count"))
+    rating = str(
+        data.find("figcaption", class_="we-rating-count star-rating__count"))
 
     rating, reviews = re.sub(r"\<.*?\>", "", rating).split(", ")
 

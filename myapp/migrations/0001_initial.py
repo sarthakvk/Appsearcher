@@ -13,7 +13,9 @@ class Migration(migrations.Migration):
     operations = [
         migrations.CreateModel(
             name="Url",
-            fields=[("url", models.URLField(primary_key=True, serialize=False)),],
+            fields=[
+                ("url", models.URLField(primary_key=True, serialize=False)),
+            ],
         ),
         migrations.CreateModel(
             name="Keyword",
@@ -31,8 +33,8 @@ class Migration(migrations.Migration):
                 (
                     "url",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="myapp.Url"
-                    ),
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="myapp.Url"),
                 ),
             ],
         ),
