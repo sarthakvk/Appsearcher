@@ -14,13 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from myapp.views import home, key_view, key_view_ajax
+from django.urls import include
+from django.urls import path
+
+from myapp.views import home
+from myapp.views import key_view
+from myapp.views import key_view_ajax
 
 urlpatterns = [
-    path('appsearch/', include('myapp.urls')),
-    path('keyfinder/',key_view,name= 'keyfinder'),
-    path('keyfinder/keyfinder_ajax/',key_view_ajax,name = "key_ajax"),
-    path('',home,name= "home"),
-    path('admin/', admin.site.urls),
+    path("appsearch/", include("myapp.urls")),
+    path("keyfinder/", key_view, name="keyfinder"),
+    path("keyfinder/keyfinder_ajax/", key_view_ajax, name="key_ajax"),
+    path("", home, name="home"),
+    path("admin/", admin.site.urls),
 ]

@@ -1,58 +1,41 @@
-$("button").click(function(){
-    $(this).attr("disabled" , "disabled");
-    $(this).css("cursor" , "not-allowed");
+$("button").click(function() {
+  $(this).attr("disabled", "disabled");
+  $(this).css("cursor", "not-allowed");
 
-    var a = $.ajax({
-            url : "keyfinder_ajax/" ,
+  var a = $.ajax({
+    url: "keyfinder_ajax/",
 
-            type : "POST" ,
+    type: "POST",
 
-            data : {
+    data: {
+      url: $("input[name=url]", "form").val(),
 
+      csrfmiddlewaretoken: window.CSRF_TOKEN
+    },
 
-                url : $("input[name=url]" , "form").val() ,
+    dataType: "json"
+  });
+  a.done(function(json) {
+    $("button").removeAttr("disabled");
+    $("button").removeAttr("cursor");
 
-                csrfmiddlewaretoken : window.CSRF_TOKEN
-            } ,
+    if (json.keywords) {
+      $("h5").css("display", "block");
 
-            dataType : "json"
-        });
-    a.done(function(json){
+      if (json.related) {
+        for (var i of json.related.keys()) {
+          $("related-url").append("<p>" + json.related.i + "</p>");
 
-        $('button').removeAttr("disabled");
-        $('button').removeAttr("cursor");
-
-        if (json.keywords){
-
-            $('h5').css('display','block')
-
-            if(json.related){
-                for(var i of json.related.keys())
-                {
-                    $('related-url').append("<p>"+json.related.i+"</p>")
-
-                    for(var j in json.related.i){
-
-                        $('related').append("<li>"+j.name+"</li>")
-
-                    }
-
-
-                }
-            }
-
+          for (var j in json.related.i) {
+            $("related").append("<li>" + j.name + "</li>");
+          }
         }
+      }
+    }
+  });
 
-    })
-
-    a.fail(function(json){
-
-
-        $('button').removeAttr("disabled");
-        $('button').removeAttr("cursor");
-
-    })
-
-})
-
-
+  a.fail(function(json) {
+    $("button").removeAttr("disabled");
+    $("button").removeAttr("cursor");
+  });
+});
